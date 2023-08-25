@@ -17,7 +17,7 @@ h1{
 }
 
 label{
-    @apply text-sky-900 font-bold
+    @apply text-sky-900 font-bold;
 }
 
 .btn-primary{
@@ -38,5 +38,17 @@ table.basic tr td{
 
 /* Applies styles to the Links in the table */
 table.basic a{
-    @apply bg-sky-800 text-white text-sm py-1 px-2 inline-flex items-center gap-1 rounded-md;
+    @apply bg-sky-800 text-white text-sm py-1 px-2 inline-flex items-center gap-1 mr-1 rounded-md;
+}
+
+.btn-default, .btn-red {
+    @apply py-1 px-3 rounded-md;
+}
+
+.btn-red {
+    @apply bg-red-600 text-white;
+}
+
+.btn-default {
+    @apply bg-gray-600 text-white;
 }
