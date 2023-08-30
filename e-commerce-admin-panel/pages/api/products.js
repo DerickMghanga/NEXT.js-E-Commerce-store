@@ -16,19 +16,19 @@ export default async function handle(req, res) {
 
     //Used to add product to DataBase @ pages/products/new.js
     if (method === 'POST') {
-        const {title,description,price} = req.body;
+        const {title,description,price, images} = req.body;
 
         const productDoc = await Product.create({
-            title, description, price
+            title, description, price, images
         })
         res.json(productDoc);
     }
 
     //used to update the product
     if (method === 'PUT') {
-        const {title, description, price, _id} = req.body;
+        const {title, description, price, images, _id} = req.body;``
 
-        await Product.updateOne({ _id }, {title, description, price}); //name of property is the same as name of variable ie use name only
+        await Product.updateOne({ _id }, {title, description, price, images}); //name of property is the same as name of variable ie use name only
         res.json(true);
     }
 
