@@ -8,4 +8,4 @@ const ProductSchema = new Schema({
     images: [{type: String}]  //image links from AWS S3 Bucket
 });
 
-export const Product = models.Product || model('Product', ProductSchema);
+export const Product = models?.Product || model('Product', ProductSchema);

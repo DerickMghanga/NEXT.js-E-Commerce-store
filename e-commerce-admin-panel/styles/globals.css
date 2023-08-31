@@ -7,12 +7,12 @@ img{
     max-height: 100%;
 }
 /* Default settings for All Input boxes */
-input, textarea{
+input, textarea, select{
     @apply border-2 border-sky-500 rounded-md px-1 py-1 w-full;
     @apply mb-2;
 }
 
-input:focus, textarea:focus{
+input:focus, textarea:focus, select:focus{
     @apply border-2 border-sky-600 px-1 py-1;
 }
 
@@ -33,7 +33,7 @@ table.basic{
 }
 
 table.basic thead tr td{
-    @apply bg-sky-100;
+    @apply bg-sky-200;
 }
 
 table.basic tr td{

@@ -3,7 +3,7 @@ import { Product } from "@/models/Product";
 
 export default async function handle(req, res) {
     const { method } = req; //Grab the method from the Request
-    await mongooseConnect();
+    await mongooseConnect();  //always connect to DB first
 
     //Fetch products from Database
     if (method === 'GET') {
