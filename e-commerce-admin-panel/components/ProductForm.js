@@ -1,27 +1,36 @@
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { ReactSortable } from "react-sortablejs";  //Drag and drop feature to sort images
 
 import Spinner from "./Spinner";
 
-export default function ProductForm({ _id, title: existingTitle, description: existingDescription, price: existingPrice, images: existingImages }) {
+export default function ProductForm({ _id, title: existingTitle, description: existingDescription, price: existingPrice, images: existingImages, category: assignedCategory }) {
 
     const [title, setTitle] = useState(existingTitle || '');
     const [description, setDescription] = useState(existingDescription || '');
+    const [category, setCategory] = useState(assignedCategory || '');   //set category for each product added
     const [price, setPrice] = useState(existingPrice || '');
     const [images, setImages] = useState( existingImages || []);  //display images after each upload action
     const [goToProducts, setGoToProducts] = useState(false);//Redirects back to Products page once a product has been added
     const [isUploading, setIsUploading] = useState(false);   //display Spinner during uploading an image/photo
+    const [categories, setCategories] = useState([]);  //categories from api
 
     const router = useRouter();
     // console.log({_id});
+
+    //fetch all categories once this component mounts
+    useEffect(() => {
+        axios.get('/api/categories').then( result => {
+            setCategories(result.data);
+        })
+    }, []);
 
     //This function will create/edit a Product via pages/api/products.js file
     async function saveProduct(event) {
         event.preventDefault(); //Prevents default behaviour of the form which is GET request once we hit SAVE instead of POST
         
-        const data = {title, description, price, images};
+        const data = {title, description, price, images, category};
         if(_id) {
             //update product the correct product (filter) by the _id. (edit product page) 
             await axios.put('/api/products', {...data, _id});   //api end-point
@@ -70,6 +79,16 @@ export default function ProductForm({ _id, title: existingTitle, description: ex
             <input type="text" placeholder="Product Name" value={title}
                 onChange={e => setTitle(e.target.value)}
             />
+
+            {/* Add Product Category */}
+            <label>Category</label>
+            <select value={category} onChange={(e)=> setCategory(e.target.value)}>
+                <option value="">Un-Categorised</option>
+                {categories.length > 0 && categories.map(category => (
+                    <option value={category._id}>{category.name}</option>
+                ))}
+            </select>
+
 
             <label>Add Photo</label>
             <div className="mb-2 flex flex-wrap gap-1">

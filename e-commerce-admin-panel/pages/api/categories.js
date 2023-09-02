@@ -16,9 +16,28 @@ export default async function handle(req, res) {
 
         const categoryDoc = await Category.create({
             name, 
+            parent:parentCategory,
+        });
+
+        res.json(categoryDoc);
+    }
+
+    //update (edit) Category
+    if (method === 'PUT') {
+        const {name, parentCategory, _id} = req.body;
+
+        const categoryDoc = await Category.updateOne({_id} ,{   //use the '_id' to update the specific category
+            name, 
             parent: parentCategory,
         });
 
         res.json(categoryDoc);
+    }
+
+    //Delete Category
+    if (method === 'DELETE') {
+        const { _id } = req.query;
+        await Category.deleteOne({ _id });
+        res.json('ok');
     }
 }
