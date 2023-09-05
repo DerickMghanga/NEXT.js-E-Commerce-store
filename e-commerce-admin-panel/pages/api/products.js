@@ -1,9 +1,12 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
+import { isAdminRequest } from "./auth/[...nextauth]";
 
 export default async function handle(req, res) {
     const { method } = req; //Grab the method from the Request
     await mongooseConnect();  //always connect to DB first
+
+    await isAdminRequest(req, res); //checks if its the admin making the request. check(api/auth/[...nextauth].js)
 
     //Fetch products from Database
     if (method === 'GET') {
@@ -16,19 +19,19 @@ export default async function handle(req, res) {
 
     // Add/create product to DataBase @ pages/products/new.js
     if (method === 'POST') {
-        const {title,description,price, images, category} = req.body;
+        const {title, description, price, images, category, properties} = req.body;
 
         const productDoc = await Product.create({
-            title, description, price, images, category,
+            title, description, price, images, category, properties
         })
         res.json(productDoc);
     }
 
     // update the product
     if (method === 'PUT') {
-        const {title, description, price, images, _id, category} = req.body;
+        const {title, description, price, images, _id, category, properties} = req.body;
 
-        await Product.updateOne({ _id }, {title, description, price, images, category}); //name of property is the same as name of variable ie use name only
+        await Product.updateOne({ _id }, {title, description, price, images, category, properties}); //if name of property is the same as name of variable ie use name only
         res.json(true);
     }
 

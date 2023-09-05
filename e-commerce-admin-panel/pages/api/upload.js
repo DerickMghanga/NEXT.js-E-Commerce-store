@@ -3,10 +3,17 @@ import fs from 'fs';  //file system library used to grab the Content uploaded ie
 import mime from 'mime-types';  //Read file types being uploaded
 
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3';  //AWS upload to S3-Bucket
+import { mongooseConnect } from '@/lib/mongoose';
+import { isAdminRequest } from './auth/[...nextauth]';
+
 const bucketName = 'next.js-e-commerce';  //from AWS S3 Bucket created
 
 
 export default async function handleUpload(req, res) {
+
+    await mongooseConnect();  //connect to DB first
+    await isAdminRequest(req, res); //checks if its the admin making the request. check (api/auth/[...nextauth].js)
+
     const form = new multiparty.Form();
     const { fields, files } = await new Promise((resolve, reject) => {
         form.parse(req, (err, fields, files) => {

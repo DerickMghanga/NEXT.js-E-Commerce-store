@@ -5,16 +5,17 @@ import { ReactSortable } from "react-sortablejs";  //Drag and drop feature to so
 
 import Spinner from "./Spinner";
 
-export default function ProductForm({ _id, title: existingTitle, description: existingDescription, price: existingPrice, images: existingImages, category: assignedCategory }) {
+export default function ProductForm({ _id, title: existingTitle, description: existingDescription, price: existingPrice, images: existingImages, category: assignedCategory, properties: assignedProperties }) {
 
     const [title, setTitle] = useState(existingTitle || '');
     const [description, setDescription] = useState(existingDescription || '');
     const [category, setCategory] = useState(assignedCategory || '');   //set category for each product added
+    const [productProperties, setProductProperties] = useState(assignedProperties || {});  //add properties to a product
     const [price, setPrice] = useState(existingPrice || '');
     const [images, setImages] = useState( existingImages || []);  //display images after each upload action
     const [goToProducts, setGoToProducts] = useState(false);//Redirects back to Products page once a product has been added
     const [isUploading, setIsUploading] = useState(false);   //display Spinner during uploading an image/photo
-    const [categories, setCategories] = useState([]);  //categories from api
+    const [categories, setCategories] = useState([]);  //categories from api. Display of the select box
 
     const router = useRouter();
     // console.log({_id});
@@ -30,7 +31,15 @@ export default function ProductForm({ _id, title: existingTitle, description: ex
     async function saveProduct(event) {
         event.preventDefault(); //Prevents default behaviour of the form which is GET request once we hit SAVE instead of POST
         
-        const data = {title, description, price, images, category};
+        const data = {
+            title,
+            description,
+            price,
+            images,
+            category,
+            properties: productProperties
+        };
+
         if(_id) {
             //update product the correct product (filter) by the _id. (edit product page) 
             await axios.put('/api/products', {...data, _id});   //api end-point
@@ -72,6 +81,30 @@ export default function ProductForm({ _id, title: existingTitle, description: ex
         setImages(images);
     }
 
+    function setProductProp(propName, value) {
+        setProductProperties((prev) => {
+            const newProductProps = {...prev};
+            newProductProps[propName] = value;
+            return newProductProps;
+        })
+    }
+
+    //fetch selected category info from categories list using the '_id'. check categories select value >> option value
+    const propertiesToFill = [];   //properties to add in a product ie Each category has its properties (mobile >>> storage (GB) >>> 64 , 128 ...)
+    if (categories.length > 0 && category) {
+        let CategoryInfo = categories.find(({_id}) => _id === category);
+        // console.log({CategoryInfo});
+        propertiesToFill.push(...CategoryInfo.properties);
+
+        //incase a product has parent category, then display parent category properties instead
+        while (CategoryInfo?.parent?._id) {
+            const parentCategoryInfo = categories.find(({_id}) => _id === CategoryInfo?.parent?._id)
+            propertiesToFill.push(...parentCategoryInfo.properties);
+            CategoryInfo = parentCategoryInfo;  //loop again to check if the parent also has a parent
+        }
+        
+    }
+
     return (
         <form onSubmit={saveProduct}>
 
@@ -88,6 +121,21 @@ export default function ProductForm({ _id, title: existingTitle, description: ex
                     <option value={category._id}>{category.name}</option>
                 ))}
             </select>
+
+            {/* Display properties for any Category selected( parent or child )*/}
+            {propertiesToFill.length > 0 && propertiesToFill.map((p) => (
+                <div className="flex gap-1">
+                    <div>{p.name}</div>
+
+                    <select value={productProperties[p.name]}
+                        onChange={(e) => setProductProp(p.name, e.target.value)} 
+                    >
+                        {p.values.map( v => (
+                            <option value={v}>{v}</option>
+                        ))}
+                    </select>
+                </div>
+            ))}
 
 
             <label>Add Photo</label>
