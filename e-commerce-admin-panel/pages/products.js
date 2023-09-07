@@ -16,7 +16,7 @@ const products = () => {
 
   return (
     <Layout>
-        <Link href={'/products/new'} className="bg-sky-600 text-white py-1 px-2 rounded-md">Add New Product</Link>
+        <Link href={'/products/new'} className="bg-sky-700 text-white text-sm py-1 px-1 rounded-md">Add New Product</Link>
         <table className="basic mt-2">
           <thead>
             <tr>
@@ -30,7 +30,7 @@ const products = () => {
               <tr key={product._id}>
                 <td>{product.title}</td>
                 <td>
-                  <Link href={'/products/edit/'+product._id}> 
+                  <Link className="btn-default" href={'/products/edit/'+product._id}> 
                     Edit  
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">
@@ -38,7 +38,7 @@ const products = () => {
                     </svg>
                   </Link>
 
-                  <Link href={'/products/delete/'+product._id}>
+                  <Link className="btn-red" href={'/products/delete/'+product._id}>
                     Delete
 
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-4 h-4">

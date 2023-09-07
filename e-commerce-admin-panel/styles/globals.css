@@ -8,24 +8,24 @@ img{
 }
 /* Default settings for All Input boxes */
 input, textarea, select{
-    @apply border-2 border-sky-500 rounded-md px-1 py-1 w-full;
-    @apply mb-2;
+    @apply border border-sky-300 rounded-md p-1 w-full shadow-lg;
+    @apply mb-1;
 }
 
 input:focus, textarea:focus, select:focus{
-    @apply border-2 border-sky-600 px-1 py-1;
+    @apply border border-sky-400 p-1;
 }
 
 h1{
-    @apply text-sky-900 font-bold mb-2 text-xl;
+    @apply text-sky-700 font-bold mb-2 text-xl;
 }
 
 label{
-    @apply text-sky-900 font-bold;
+    @apply text-sky-700 font-bold;
 }
 
 .btn-primary{
-    @apply bg-sky-900 text-white font-bold px-2 py-1 rounded-md;
+    @apply bg-sky-700 text-white font-bold px-2 py-1 rounded-md;
 }
 
 table.basic{
@@ -33,16 +33,16 @@ table.basic{
 }
 
 table.basic thead tr td{
-    @apply bg-sky-200;
+    @apply border-b border-sky-300 text-sm font-bold uppercase px-4 py-1;
 }
 
 table.basic tr td{
-    @apply border border-sky-700 p-1;
+    @apply px-4 py-2 ;
 }
 
 /* Applies styles to the Links in the table */
 table.basic a{
-    @apply bg-sky-800 text-white text-sm py-1 px-2 inline-flex items-center gap-1 mr-1 rounded-md;
+    @apply text-white text-sm px-2 inline-flex items-center gap-1 mr-1 rounded-md;
 }
 
 .btn-default, .btn-red {
@@ -50,9 +50,9 @@ table.basic a{
 }
 
 .btn-red {
-    @apply bg-red-600 text-white;
+    @apply bg-red-500 text-white;
 }
 
 .btn-default {
-    @apply bg-gray-600 text-white my-1;
+    @apply bg-gray-700 text-white my-1;
 }

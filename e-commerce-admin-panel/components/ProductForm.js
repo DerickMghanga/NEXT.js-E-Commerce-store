@@ -124,23 +124,26 @@ export default function ProductForm({ _id, title: existingTitle, description: ex
 
             {/* Display properties for any Category selected( parent or child )*/}
             {propertiesToFill.length > 0 && propertiesToFill.map((p) => (
-                <div className="flex gap-1">
-                    <div>{p.name}</div>
+                <div className="flex gap-2">
+                    <div>{p.name[0].toUpperCase()+p.name.substring(1)}</div>
 
-                    <select value={productProperties[p.name]}
-                        onChange={(e) => setProductProp(p.name, e.target.value)} 
-                    >
-                        {p.values.map( v => (
-                            <option value={v}>{v}</option>
-                        ))}
-                    </select>
+                    <div>
+                        <select value={productProperties[p.name]}
+                            onChange={(e) => setProductProp(p.name, e.target.value)} 
+                        >
+                            {p.values.map( v => (
+                                <option value={v}>{v}</option>
+                            ))}
+                        </select>
+                    </div>
+                    
                 </div>
             ))}
 
 
             <label>Add Photo</label>
             <div className="mb-2 flex flex-wrap gap-1">
-                <ReactSortable list={images} setList={updateImagesOrder} className="flex flex-wrap gap-1">
+                <ReactSortable list={images} setList={updateImagesOrder} className="flex flex-wrap gap-2">
                 {/* Display images after each upload */}
                 {!!images?.length && images.map(link => (  //use "!!" to change to boolean
                     <div key={link} className="h-24">
@@ -157,7 +160,7 @@ export default function ProductForm({ _id, title: existingTitle, description: ex
                     </div>
                 )}
 
-                <label className="w-24 h-24 flex justify-center cursor-pointer items-center p-2 text-sm text-gray-800 rounded-lg bg-gray-300">
+                <label className="w-24 h-24 flex justify-center cursor-pointer items-center p-2 text-sm text-gray-800 rounded-lg bg-gray-400 border border-gray-300 shadow-lg">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mr-1">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
                     </svg>
