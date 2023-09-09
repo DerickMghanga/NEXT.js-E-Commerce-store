@@ -2,7 +2,7 @@ import { css, styled } from "styled-components"
 
 export const ButtonStyle = css`   //to be used by both Button & ButtonLink components
     border: 0;
-    padding: 5px 15px;
+    padding: 4px 12px;
     border-radius: 5px;
     cursor: pointer;
     display: inline-flex;

@@ -8,6 +8,8 @@ const ProductSchema = new Schema({
     images: [{type: String}],  //image links as array of Strings from AWS S3 Bucket
     category: {type: mongoose.Types.ObjectId, ref:'Category'},
     properties: {type: Object},
+}, {
+    timestamps: true,
 });
 
 export const Product = models?.Product || model('Product', ProductSchema);
