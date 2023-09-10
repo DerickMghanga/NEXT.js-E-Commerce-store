@@ -1,3 +1,4 @@
+import { primary } from "@/lib/colors"
 import { css, styled } from "styled-components"
 
 export const ButtonStyle = css`   //to be used by both Button & ButtonLink components
@@ -8,6 +9,7 @@ export const ButtonStyle = css`   //to be used by both Button & ButtonLink compo
     display: inline-flex;
     align-items: center;
     text-decoration: none;
+    font-weight: bold;
 
     svg{
         height: 17px;
@@ -27,10 +29,17 @@ export const ButtonStyle = css`   //to be used by both Button & ButtonLink compo
         border: 1px solid #fff;
     `}
 
-    ${props => props.primary && css`
-    background-color: #0052cc;
+    ${props => props.primary && !props.outline && css`
+    background-color: ${primary};
     color: #fff;
-    border: 1px solid #0052cc;
+    border: 2px solid ${primary};
+    margin: 3px;
+    `}
+
+    ${props => props.primary && props.outline && css`
+    background-color: transparent;
+    color: ${primary};
+    border: 2px solid ${primary};
     margin: 3px;
     `}
 
