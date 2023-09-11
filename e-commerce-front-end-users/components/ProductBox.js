@@ -3,6 +3,8 @@ import Button from "./Button"
 import CartIcon from "./icons/CartIcon"
 import Link from "next/link"
 import { primary } from "@/lib/colors"
+import { useContext } from "react"
+import { CartContext } from "./CartContext"
 
 const ProductWrapper = styled.div`
 
@@ -46,6 +48,8 @@ const Price = styled.div`
 
 
 export default function ProductBox({_id, title, description, price, images}) {
+
+    const {addProduct} = useContext(CartContext);  //from CartContext.Provider
     
     const url = '/product/'+_id;
 
@@ -65,7 +69,10 @@ export default function ProductBox({_id, title, description, price, images}) {
                         KES {price}
                     </Price>
 
-                    <Button primary outline > <CartIcon /> </Button>
+                    <Button primary outline onClick={() => addProduct(_id)} > 
+                        <CartIcon />
+                    </Button>
+
                 </PriceRow>
                 
             </ProductInfoBox>
