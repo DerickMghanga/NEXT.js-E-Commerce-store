@@ -61,6 +61,13 @@ export const ButtonStyle = css`   //to be used by both Button & ButtonLink compo
     margin: 3px;
     `}
 
+    ${props => props.primary && props.red && css`
+    background-color: #cc0000;
+    color: #fff;
+    border: 2px solid #cc0000;
+    margin: 3px;
+    `}
+
     ${props => props.size === 'l' && css`
         font-size: 1.2rem;
         padding: 6px 15px;

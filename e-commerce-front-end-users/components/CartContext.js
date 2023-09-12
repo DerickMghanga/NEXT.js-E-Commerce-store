@@ -27,8 +27,24 @@ export function CartContextProvider({children}) {
         setCartproducts(prev => [...prev, productId]);
     }
 
+    // Remove product from previously saved products in the cart
+    function removeProduct(productId) {
+        setCartproducts(prev => {
+            const pos = prev.indexOf(productId); //find the position of the product in 'cartProducts' array
+
+            if (pos !== -1) {
+                return prev.filter((value, index) => index !== pos);
+            }
+            return prev;
+        });
+    }
+
+    function clearCart() {
+        setCartproducts([]);
+    }
+
     return (
-        <CartContext.Provider value={{cartProducts, setCartproducts, addProduct}} >
+        <CartContext.Provider value={{cartProducts, setCartproducts, addProduct, removeProduct, clearCart}} >
             {children}
         </CartContext.Provider>
     );

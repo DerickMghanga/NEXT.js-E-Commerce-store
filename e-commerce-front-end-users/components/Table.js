@@ -9,6 +9,10 @@ const StyledTable = styled.table`
         color: #aaa;
         font-size: .8rem;
     }
+
+    td{
+        border-top: 1px solid rgba(0,0,0,.1);
+    }
 `
 
 export default function Table(props) {
