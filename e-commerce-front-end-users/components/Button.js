@@ -16,6 +16,11 @@ export const ButtonStyle = css`   //to be used by both Button & ButtonLink compo
         margin-right: 5px;
     }
 
+    ${props => props.block && css`
+        display: block;
+        width: 100%;
+    `}
+
     ${props => props.white && !props.outline && css`
         background-color: #fff;
         color: #000;
@@ -27,6 +32,19 @@ export const ButtonStyle = css`   //to be used by both Button & ButtonLink compo
         color: #fff;
         margin: 3px;
         border: 1px solid #fff;
+    `}
+
+    ${props => props.black && !props.outline && css`
+        background-color: #000;
+        color: #fff;
+        margin: 3px;
+    `}
+
+    ${props => props.black && props.outline && css`
+        background-color: transparent;
+        color: #000;
+        margin: 3px;
+        border: 1px solid #000;
     `}
 
     ${props => props.primary && !props.outline && css`

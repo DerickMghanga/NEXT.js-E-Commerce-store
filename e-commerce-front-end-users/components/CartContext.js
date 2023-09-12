@@ -23,7 +23,7 @@ export function CartContextProvider({children}) {
     }, [])
 
     // Add new product to the previously saved products in the cart
-    function addProduct(productId) {    // productId = product._id >> Header.js
+    function addProduct(productId) {    // productId = product._id
         setCartproducts(prev => [...prev, productId]);
     }
 
