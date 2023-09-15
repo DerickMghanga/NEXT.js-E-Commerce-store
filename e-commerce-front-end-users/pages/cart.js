@@ -77,9 +77,21 @@ export default function CartPage() {
         addProduct(id);
     }
 
-    // remove produci
+    // remove product
     function lessOfThisProduct(id) {
         removeProduct(id);
+    }
+
+    async function goToPayment() {
+        const response = await axios.post('/api/checkout', {
+            name, email, city, postalCode, streetAddress,
+            phoneNumber, country,
+            cartProducts,
+        });
+
+        if (response.data.url) {  //grab url from response and navigate to it
+            window.location = response.data.url;
+        }
     }
 
     let total = 0;
@@ -87,6 +99,23 @@ export default function CartPage() {
         const price = products.find(p => p._id === productId)?.price || 0; //find price for the products
         total += price;
     }
+
+    // check if the payment was successfull from the link >>> /api/checkout.js 
+    // if(window.location.href.includes('success')) {
+    //     return(
+    //         <>
+    //             <Header />
+    //             <Center>
+    //                 <ColumnsWrapper>
+    //                     <Box>
+    //                         <h1>Thanks for your Order!❤️</h1>
+    //                         <p>We will Contact you soon😍</p>
+    //                     </Box>
+    //                 </ColumnsWrapper>
+    //             </Center>
+    //         </>
+    //     )
+    // }
 
     return (
         <>
@@ -132,7 +161,7 @@ export default function CartPage() {
                                             </td>
 
                                             <td>
-                                                KES {product.price * cartProducts.filter((id) => id === product._id).length}
+                                                USD {product.price * cartProducts.filter((id) => id === product._id).length}
                                             </td>
                                         </tr>
                                     ))}
@@ -144,7 +173,7 @@ export default function CartPage() {
                                         <Button primary red onClick={() =>clearCart()}>Clear Cart!</Button>
                                         </td>
                                         
-                                        <td>KES {total}</td>
+                                        <td>USD {total}</td>
                                     </tr>
                                 </tbody>
                             </Table>
@@ -157,21 +186,32 @@ export default function CartPage() {
                         <Box>
                             <h3>Order Information</h3>
 
-                            <form method="post" action='/api/checkout'>
-                                <Input type="text" placeholder="Full Name" value={name} onChange={(e) => setName(e.target.value)}/>
-                                <Input type="text" placeholder="Email Address" value={email} onChange={(e) => setEmail(e.target.value)}/>
-                                <Input type="text" placeholder="Street / Home Address" value={streetAddress} onChange={(e) => setStreetAddress(e.target.value)}/>
+                            <Input type="text" placeholder="Full Name" name="name"
+                                value={name} onChange={(e) => setName(e.target.value)}/>
 
-                                <CityHolder>
-                                    <Input type="text" placeholder="City / Town" value={city} onChange={(e) => setCity(e.target.value)}/>
-                                    <Input type="text" placeholder="Postal Code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)}/>
-                                </CityHolder>
+                            <Input type="text" placeholder="Email Address" name="email"
+                                value={email} onChange={(e) => setEmail(e.target.value)}/>
 
-                                <Input type="text" placeholder="Phone Number" value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
-                                <Input type="text" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)}/>
+                            <Input type="text" placeholder="Street / Home Address" name="streetAddress"
+                                value={streetAddress} onChange={(e) => setStreetAddress(e.target.value)}/>
 
-                                <Button block black type='submit' >Continue to Payment</Button>
-                            </form>
+                            <CityHolder>
+                                <Input type="text" placeholder="City / Town" name="city"
+                                    value={city} onChange={(e) => setCity(e.target.value)}/>
+
+                                <Input type="text" placeholder="Postal Code" name="postalCode"
+                                    value={postalCode} onChange={(e) => setPostalCode(e.target.value)}/>
+
+                            </CityHolder>
+
+                            <Input type="text" placeholder="Phone Number" name="phoneNumber"
+                                value={phoneNumber} onChange={(e) => setPhoneNumber(e.target.value)}/>
+
+                            <Input type="text" placeholder="Country" name="country"
+                                value={country} onChange={(e) => setCountry(e.target.value)}/>
+
+                            <Button block black onClick={goToPayment} >Continue to Payment</Button>
+                            
                         </Box>
                     )}
                     

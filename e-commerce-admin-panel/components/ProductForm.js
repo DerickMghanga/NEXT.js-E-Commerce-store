@@ -81,7 +81,7 @@ export default function ProductForm({ _id, title: existingTitle, description: ex
         setImages(images);
     }
 
-    function setProductProp(propName, value) {
+    function setProductProp(propName, value) {   //key and value pair
         setProductProperties((prev) => {
             const newProductProps = {...prev};
             newProductProps[propName] = value;
@@ -96,7 +96,7 @@ export default function ProductForm({ _id, title: existingTitle, description: ex
         // console.log({CategoryInfo});
         propertiesToFill.push(...CategoryInfo.properties);
 
-        //incase a product has parent category, then display parent category properties instead
+        //incase a category has parent category, then display parent category properties instead
         while (CategoryInfo?.parent?._id) {
             const parentCategoryInfo = categories.find(({_id}) => _id === CategoryInfo?.parent?._id)
             propertiesToFill.push(...parentCategoryInfo.properties);

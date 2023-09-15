@@ -3,7 +3,7 @@ import { Category } from "@/models/Category";
 import { getServerSession } from "next-auth";
 import { authOptions, isAdminRequest } from "./auth/[...nextauth]";
 
-export default async function handle(req, res) {
+export default async function handler(req, res) {
     const { method } = req;  //Grab the method from the Request
     await mongooseConnect();  //always connect to DB first
 

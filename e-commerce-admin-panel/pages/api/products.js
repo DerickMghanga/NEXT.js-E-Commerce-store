@@ -2,7 +2,7 @@ import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
 import { isAdminRequest } from "./auth/[...nextauth]";
 
-export default async function handle(req, res) {
+export default async function handler(req, res) {
     const { method } = req; //Grab the method from the Request
     await mongooseConnect();  //always connect to DB first
 
