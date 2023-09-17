@@ -61,6 +61,8 @@ export default function CartPage() {
     const [phoneNumber, setPhoneNumber] = useState('');
     const [country, setCountry] = useState('');
 
+    const [isSuccess, setIsSuccess] = useState(false);  //check if payment was succesfull
+
     // fetch all products from DB api using POST request
     useEffect(() => {
         if (cartProducts.length > 0) {
@@ -69,6 +71,18 @@ export default function CartPage() {
             })
         } else {
             setProducts([]);
+        }
+    }, [cartProducts]);
+
+    //clear Cart after Successfully making an Order
+    useEffect(() => {
+        if (typeof window === 'undefined') {
+            return;
+        }
+
+        if (window?.location.href.includes('success')) {
+            setIsSuccess(true);
+            clearCart();
         }
     }, [cartProducts]);
 
@@ -101,21 +115,21 @@ export default function CartPage() {
     }
 
     // check if the payment was successfull from the link >>> /api/checkout.js 
-    // if(window.location.href.includes('success')) {
-    //     return(
-    //         <>
-    //             <Header />
-    //             <Center>
-    //                 <ColumnsWrapper>
-    //                     <Box>
-    //                         <h1>Thanks for your Order!❤️</h1>
-    //                         <p>We will Contact you soon😍</p>
-    //                     </Box>
-    //                 </ColumnsWrapper>
-    //             </Center>
-    //         </>
-    //     )
-    // }
+    if(isSuccess) {
+        return(
+            <>
+                <Header />
+                <Center>
+                    <ColumnsWrapper>
+                        <Box>
+                            <h1>Thanks for your Order!❤️</h1>
+                            <p>We will Contact you soon😍</p>
+                        </Box>
+                    </ColumnsWrapper>
+                </Center>
+            </>
+        )
+    }
 
     return (
         <>
@@ -170,7 +184,7 @@ export default function CartPage() {
                                         <td></td>
 
                                         <td>
-                                        <Button primary red onClick={() =>clearCart()}>Clear Cart!</Button>
+                                        <Button primary red onClick={() => {clearCart()}}>Clear Cart!</Button>
                                         </td>
                                         
                                         <td>USD {total}</td>

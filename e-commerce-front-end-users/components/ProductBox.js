@@ -66,7 +66,7 @@ export default function ProductBox({_id, title, description, price, images}) {
 
                 <PriceRow>
                     <Price>
-                        KES {price}
+                        $ {price}
                     </Price>
 
                     <Button primary outline onClick={() => addProduct(_id)} > 

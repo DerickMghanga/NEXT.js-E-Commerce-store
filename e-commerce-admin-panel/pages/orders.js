@@ -27,7 +27,8 @@ export default function OrdersPage() {
                 <tbody>
                     {orders.length > 0 && orders.map(order => (
                         <tr>
-                            <td>{order.createdAt}</td>
+                            {/* another Date format >>> {order.createdAt?.replace('T', ' ').substring(0, 19)} */}
+                            <td>{new Date(order.createdAt)?.toString().replace('GMT+0300 (East Africa Time)', '')}</td> 
                             <td>
                                 {order.name} {order.email} <br/>
                                 {order.phoneNumber} <br/>
@@ -38,8 +39,7 @@ export default function OrdersPage() {
                             <td>
                                 {order.line_items.map(l => (
                                     <>
-                                        {l.price_data.product_data.name}
-                                        {JSON.stringify(l)}
+                                        {l.price_data?.product_data.name} x {l.quantity} <br/>
                                     </>
                                 ))}
                             </td>
