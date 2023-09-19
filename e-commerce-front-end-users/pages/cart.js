@@ -10,9 +10,13 @@ import { styled } from "styled-components";
 
 const ColumnsWrapper = styled.div`
     display: grid;
-    grid-template-columns: 1.3fr .7fr;
+    grid-template-columns: 1fr;
     gap: 40px;
-    margin-top: 30px;
+    margin: 30px 0;
+
+    @media screen and (min-width: 768px) {
+        grid-template-columns: 1.3fr .7fr;
+    }
 `
 const Box = styled.div`
     background-color: #fff;
@@ -21,11 +25,13 @@ const Box = styled.div`
 `
 const ProductInfoCell = styled.td`
     padding: 10px 0;
+
+    
 `
 const ProductImageBox = styled.div`
     width: 90px;
     height: 90px;
-    padding: 10px;
+    padding: 2px;
     border: 1px solid rgba(0, 0, 0, 0.1);
     display: flex;
     align-items: center;
@@ -33,13 +39,27 @@ const ProductImageBox = styled.div`
     border-radius: 12px;
 
     img{
-        max-width: 70px;
-        max-height: 70px;   
+        max-width: 66px;
+        max-height: 66px;   
+    }
+
+    @media screen and (min-width: 768px) {
+        padding: 10px;
+
+        img{
+            max-width: 80px;
+            max-height: 80px;   
+        }
     }
 `
 const QuantityLabel = styled.span`
     padding: 0 5px;
-    margin: 0 5px;
+    margin: 5px;
+    display: block;
+
+    @media screen and (min-width: 768px) {
+        display: inline-block;
+    }
 `
 
 const CityHolder = styled.div`
@@ -175,7 +195,7 @@ export default function CartPage() {
                                             </td>
 
                                             <td>
-                                                USD {product.price * cartProducts.filter((id) => id === product._id).length}
+                                                $ {product.price * cartProducts.filter((id) => id === product._id).length}
                                             </td>
                                         </tr>
                                     ))}
@@ -187,7 +207,7 @@ export default function CartPage() {
                                         <Button primary red onClick={() => {clearCart()}}>Clear Cart!</Button>
                                         </td>
                                         
-                                        <td>USD {total}</td>
+                                        <td>${total}</td>
                                     </tr>
                                 </tbody>
                             </Table>

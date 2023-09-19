@@ -19,6 +19,13 @@ const ImageButtons = styled.div`   //All images button
 `
 const ImageButton = styled.div`   // Single image
     border: 1px solid #ccc;
+
+    ${props => props.active ? `
+        border-color: #ccc;
+    `:`
+        border-color: transparent;
+        opacity: 0.6;
+    `}
     height: 75px;
     padding: 3px;
     cursor: pointer;
@@ -39,7 +46,10 @@ export default function ProductImages({images}) {  // array of images
             {/* Buttons to change Main Image display */}
             <ImageButtons>
                 {images.map(image => (
-                    <ImageButton onClick={() => setActiveImage(image)}>
+                    <ImageButton  key={image}
+                        onClick={() => setActiveImage(image)}
+                        active={image === activeImage}
+                    >
                         <Image src={image}/>
                     </ImageButton>
                 ))}
